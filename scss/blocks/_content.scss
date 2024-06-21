@@ -1,0 +1,12 @@
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - $header-height - $footer-height);
+
+  &__list {
+    display: flex;
+    align-items: center;
+  }
+}
