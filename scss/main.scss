@@ -1,5 +1,10 @@
-@import "./normilize";
+@import "./normalize";
 @import "./variables";
+@import "./shared";
 @import "./blocks/content";
 @import "./blocks/header";
 @import "./blocks/footer";
+
+body {
+  background-color: $gray;
+}

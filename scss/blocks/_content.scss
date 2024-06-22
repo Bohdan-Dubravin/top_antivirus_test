@@ -5,8 +5,109 @@
   width: 100%;
   height: calc(100vh - $header-height - $footer-height);
 
+  @include laptop {
+    height: auto;
+    min-height: 100vh;
+  }
+
   &__list {
     display: flex;
     align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 30px;
+
+    @include laptop {
+      flex-direction: column;
+      gap: 80px;
+    }
+  }
+
+  &__item {
+    position: relative;
+    height: 220px;
+    width: 360px;
+    background-color: $light;
+    transition: 0.5s ease;
+
+    &:hover {
+      box-shadow: 0px 2px 10px 2px #00000040;
+    }
+  }
+
+  &__price-container {
+    background: $white;
+    position: absolute;
+    box-shadow: 0px 0px 4px 0px #00000040;
+    left: 60px;
+    top: -50px;
+    width: 240px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__price {
+    @extend %title;
+  }
+
+  &__description {
+    margin-top: 72px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  &__name {
+    @extend %text-light;
+  }
+
+  &__period {
+    @extend %text-bold;
+  }
+
+  &__best-product {
+    @extend %span-bold;
+    color: $dark;
+    background-color: $orange;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 4px 16px;
+  }
+
+  &__discount-img {
+    position: absolute;
+    left: -14px;
+    top: -15px;
+  }
+
+  &__button {
+    @extend %button;
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    justify-content: end;
+    width: 190px;
+    height: 50px;
+    border: none;
+    color: $white;
+    margin: 0 auto;
+    border-radius: 50px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    background: linear-gradient(0deg, #130999 -0.01%, #174d8f 35.01%, #1a7f87 64.91%, #1c9e83 87.44%, #1daa81 99.99%);
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    &:hover {
+      box-shadow: 0px 6px 6px 0px #00000040;
+      opacity: 0.85;
+    }
+
+    & img {
+      margin-left: 18px;
+      margin-right: 11px;
+    }
   }
 }
