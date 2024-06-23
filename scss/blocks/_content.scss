@@ -3,7 +3,7 @@
   align-items: center;
   flex-direction: column;
   height: calc(100vh - $header-height - $footer-height);
-  max-width: 1200px;
+  max-width: 1140px;
   margin: 0 auto;
 
   @include laptop {
