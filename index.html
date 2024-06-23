@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>McAfee® Total Protection</title>
 
-    <link rel="stylesheet" href="./scss/main.css" />
+    <link rel="stylesheet" href="./css/main.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,41 +14,27 @@
     />
   </head>
   <body>
-    <header class="header"></header>
+    <header class="header">
+      <div class="header__container">
+        <h1 class="header__title"><span>top antivirus</span> PC APP STORE™</h1>
+      </div>
+    </header>
+
     <main class="content">
-      <ul class="content__list"></ul>
+      <h2 class="content__title">thank you for choosing our product !</h2>
+      <div class="loader"></div>
+      <ul class="content__list d-none"></ul>
     </main>
-    <!-- <li class="content__item">
-            <div class="content__price-container">
-              <p class="content__price">$1.02 <span>/per year</span></p>
-            </div>
-            <div class="content__description">
-              <p class="content__name">McAfee® Total Protection</p>
-              <p class="content__period">1Year / 1-Device</p>
-            </div>
-            <button class="content__button">download <img src="./img/download.svg" alt="download" /></button>
-          </li>
-          <li class="content__item">
-            <div class="content__price-container">
-              <p class="content__price">$1.02 <span>/per year</span></p>
-            </div>
-            <div class="content__description">
-              <p class="content__name">McAfee® Total Protection</p>
-              <p class="content__period">1Year / 1-Device</p>
-            </div>
-            <button class="content__button">download <img src="./img/download.svg" alt="download" /></button>
-          </li>
-          <li class="content__item">
-            <div class="content__price-container">
-              <p class="content__price">$1.02 <span>/per year</span></p>
-            </div>
-            <div class="content__description">
-              <p class="content__name">McAfee® Total Protection</p>
-              <p class="content__period">1Year / 1-Device</p>
-            </div>
-            <button class="content__button">download <img src="./img/download.svg" alt="download" /></button>
-          </li> -->
-    <footer class="footer"></footer>
+
+    <footer class="footer">
+      <div class="footer__container">
+        <p class="footer__title">top antivirus</p>
+        <p class="footer__copyright">Copyright © 2024</p>
+      </div>
+    </footer>
+
+    <img class="top-arrow d-none" src="./img/icon_download-top.svg" alt="downloads" />
+    <img class="bottom-arrow d-none" src="./img/icon_download-bottom.svg" alt="downloads" />
     <script src="./js/index.js"></script>
   </body>
 </html>

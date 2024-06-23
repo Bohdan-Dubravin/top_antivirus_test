@@ -1,22 +1,35 @@
 .content {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
+  flex-direction: column;
   height: calc(100vh - $header-height - $footer-height);
+  max-width: 1200px;
+  margin: 0 auto;
 
   @include laptop {
     height: auto;
     min-height: 100vh;
+    padding: 20px;
+  }
+
+  &__title {
+    @extend %main-title;
+    margin-bottom: 92px;
+    margin-top: 150px;
+
+    @include mobile {
+      margin-top: 80px;
+    }
   }
 
   &__list {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 30px;
+    width: 100%;
 
     @include laptop {
       flex-direction: column;
@@ -34,6 +47,11 @@
     &:hover {
       box-shadow: 0px 2px 10px 2px #00000040;
     }
+
+    @include mobile {
+      max-width: 290px;
+      width: 290px;
+    }
   }
 
   &__price-container {
@@ -47,10 +65,32 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @include mobile {
+      width: 200px;
+      left: 45px;
+    }
   }
 
   &__price {
-    @extend %title;
+    @extend %text-extra-bold;
+    position: relative;
+  }
+
+  &__price-period {
+    @extend %text-small;
+    position: relative;
+  }
+
+  &__discount {
+    @extend %subtitle;
+    position: absolute !important;
+    bottom: -10px;
+    right: 50%;
+    transform: translateX(50%);
+    width: fit-content;
+    color: $dark-gray;
+    text-decoration: line-through;
   }
 
   &__description {

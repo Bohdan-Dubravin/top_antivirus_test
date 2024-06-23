@@ -4,7 +4,5 @@
 @import "./blocks/content";
 @import "./blocks/header";
 @import "./blocks/footer";
-
-body {
-  background-color: $gray;
-}
+@import "./blocks/preloader";
+@import "./global";

@@ -3,9 +3,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const data = await fetchData();
     document.title = data?.result?.title || "McAfee® Total Protection";
     showOffers(data.result.elements);
+    createJsonLD(data.result);
   } catch (error) {}
 });
 
+//get data used AJAX instead of fetch because of test description
 async function fetchData() {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -29,8 +31,10 @@ async function fetchData() {
   });
 }
 
+//show offers list
 function showOffers(data) {
   const list = document.querySelector(".content__list");
+  const loader = document.querySelector(".loader");
 
   data?.forEach((element) => {
     const { name_prod, license_name, amount, is_best, price_key, is_disabled, link } = element;
@@ -45,7 +49,9 @@ function showOffers(data) {
         <div class="content__price-container">
         ${discount ? '<img class="content__discount-img" src="./img/50OFF.svg" alt="discount" />' : ""}
         ${is_best ? '<span class="content__best-product">Best value</span>' : ""}
-          <p class="content__price">$${amount} <span>/${licensePeriod}</span></p>
+          <p class="content__price">$${amount} <span class="content__price-period">/${licensePeriod}</span> ${
+      discount ? `<span class="content__discount">$${Math.floor((amount / discount) * 100)}.99 </span>` : ""
+    }</p> 
         </div>
         <div class="content__description">
           <p class="content__name">${name_prod}</p>
@@ -57,40 +63,73 @@ function showOffers(data) {
           download <img src="./img/download.svg" alt="download">
         </a>
     `;
+    listItem.querySelector(".content__button").addEventListener("click", () => {
+      displayDownloadsPlace();
+    });
+
     list.appendChild(listItem);
+
+    list.classList.remove("d-none");
+    loader.classList.add("d-none");
   });
 }
 
-var userAgent = navigator.userAgent;
-
-// Regular expression to match browsers
-var browser;
-if (/Firefox\//.test(userAgent)) {
-  browser = "Firefox";
-} else if (/Chrome\//.test(userAgent)) {
-  browser = "Chrome";
-} else if (/Safari\//.test(userAgent) && !/Chrome\//.test(userAgent)) {
-  browser = "Safari";
-} else if (/MSIE|Trident\//.test(userAgent)) {
-  browser = "Internet Explorer";
-} else if (/Edge\//.test(userAgent)) {
-  browser = "Edge";
-} else {
-  browser = "Unknown browser";
+//display button near downloads however in modern chrome browser button is also at the top
+function displayDownloadsPlace() {
+  if (isMobileDevice()) return;
+  const browser = getBrowser();
+  setTimeout(() => {
+    if (browser === "Chrome") {
+      const downloadsPointer = document.querySelector(".bottom-arrow");
+      downloadsPointer.classList.remove("d-none");
+    } else {
+      const downloadsPointer = document.querySelector(".top-arrow");
+      downloadsPointer.classList.remove("d-none");
+    }
+  }, 1500);
 }
 
-// Output the detected browser
-console.log(browser);
-// {
-//   "product_key": "mcafee_total_1_1",
-//   "price_key": "test",
-//   "is_best": true,
-//   "is_checked": true,
-//   "is_disabled": false,
-//   "is_addon": false,
-//   "name_display": "McAfee® Total Protection 1-Year / 1-Device",
-//   "name_prod": "McAfee® Total Protection",
-//   "license_name": "1-Year / 1-Device",
-//   "amount": "1.02",
-//   "link": "https://sadownload.mcafee.com/products/sa/website/WebAdvisorInstaller.exe"
-// }
+//get browse type
+function getBrowser() {
+  const userAgent = navigator.userAgent;
+  return /Firefox\//.test(userAgent)
+    ? "Firefox"
+    : /Chrome\//.test(userAgent)
+    ? "Chrome"
+    : /Safari\//.test(userAgent) && !/Chrome\//.test(userAgent)
+    ? "Safari"
+    : /MSIE|Trident\//.test(userAgent)
+    ? "Internet Explorer"
+    : /Edge\//.test(userAgent)
+    ? "Edge"
+    : "Unknown browser";
+}
+
+// detect if mobile
+function isMobileDevice() {
+  return navigator.userAgentData.mobile;
+}
+
+// ceo optimization get request
+function createJsonLD(data) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: data.title,
+    offers: data.elements.map((element) => ({
+      "@type": "Offer",
+      url: element.link,
+      priceCurrency: "USD",
+      price: element.amount,
+      availability: "https://schema.org/InStock",
+      name: element.name_display,
+      sku: element.product_key,
+      description: `${element.name_prod} - ${element.license_name}`,
+    })),
+  };
+
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify(jsonLd);
+  document.head.appendChild(script);
+}
