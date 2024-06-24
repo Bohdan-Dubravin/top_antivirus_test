@@ -19,7 +19,6 @@ async function fetchData() {
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
         const data = JSON.parse(xhr.responseText);
-        reject(new Error("Request failed. Returned status of " + xhr.status));
         resolve(data);
       } else {
         reject(new Error("Request failed. Returned status of " + xhr.status));
