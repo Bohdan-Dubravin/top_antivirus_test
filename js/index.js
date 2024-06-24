@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.title = data?.result?.title || "McAfee® Total Protection";
     showOffers(data.result.elements);
     createJsonLD(data.result);
-  } catch (error) {}
+  } catch (error) {
+    displayError();
+  }
 });
 
 //get data used AJAX instead of fetch because of test description
@@ -17,6 +19,7 @@ async function fetchData() {
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
         const data = JSON.parse(xhr.responseText);
+        reject(new Error("Request failed. Returned status of " + xhr.status));
         resolve(data);
       } else {
         reject(new Error("Request failed. Returned status of " + xhr.status));
@@ -132,4 +135,14 @@ function createJsonLD(data) {
   script.type = "application/ld+json";
   script.textContent = JSON.stringify(jsonLd);
   document.head.appendChild(script);
+}
+
+//in case of error
+function displayError() {
+  const loader = document.querySelector(".loader");
+  const title = document.querySelector(".content__title");
+
+  title.classList.add("error-text");
+  title.innerHTML = "Something went wrong please refresh page and try again!";
+  loader.classList.add("d-none");
 }
